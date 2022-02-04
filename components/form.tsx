@@ -9,20 +9,41 @@ import {
   Select,
   Button
 } from '@chakra-ui/react'
-import { ChevronDownIcon } from '@chakra-ui/icons'
 import { FormEvent, useState } from 'react'
 import { sendRequest } from '../service/request'
 import styles from './styles.module.css'
 
-export const FormComponent = () => {
-  const [subjectText, setSubjectText] = useState()
-  const [descriptionText, setDescriptionText] = useState()
-  const [ticketType, setTicketType] = useState<String>()
+type ValuesType = {
+  subjectText: string
+  descriptionText?: string
+  ticketType?: string
+}
 
+type FormComponentProps = {
+  onSubmitForm: ({
+    subjectText,
+    descriptionText,
+    ticketType
+  }: ValuesType) => void
+}
+
+export const FormComponent = ({ onSubmitForm }: FormComponentProps) => {
+  const [subjectText, setSubjectText] = useState('')
+  const [descriptionText, setDescriptionText] = useState<string>()
+  const [ticketType, setTicketType] = useState<string>()
+
+  const [formValue, serFormValue] = useState<ValuesType>({
+    ticketType: '',
+    descriptionText: '',
+    subjectText: ''
+  })
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
-    //sendRequest('api/help-desk', {})
-    console.log(event)
+    sendRequest('/api/help-desk', {
+      subjectText,
+      descriptionText,
+      ticketType
+    })
   }
 
   const ticketsType = ['Internet', 'Hardware', 'Software']
@@ -49,6 +70,7 @@ export const FormComponent = () => {
                 type="subject"
                 color="fontColor"
                 placeholder="Type the subject"
+                onChange={(event) => setSubjectText(event.target.value)}
               />
             </FormControl>
             <FormControl>
@@ -60,6 +82,7 @@ export const FormComponent = () => {
                 type="description"
                 color="fontColor"
                 placeholder="Type a description if necessary"
+                onChange={(event) => setDescriptionText(event.target.value)}
               />
             </FormControl>
 
@@ -68,7 +91,7 @@ export const FormComponent = () => {
                 placeholder="Select ticket type"
                 color="fontColor"
                 w="20vw"
-                onChange={(value) => setTicketType(value.target.value)}
+                onChange={(event) => setTicketType(event.target.value)}
               >
                 {ticketsType.map((item) => (
                   <option key={item} value={item}>
@@ -77,7 +100,9 @@ export const FormComponent = () => {
                 ))}
               </Select>
 
-              <Button type="submit">Submit</Button>
+              <Button type="submit" disabled={!subjectText}>
+                Submit
+              </Button>
             </Flex>
           </Flex>
         </form>
