@@ -1,0 +1,22 @@
+.form {
+  position: relative;
+  background-color: #2d3748;
+  border-radius: 0.8rem;
+  width: 50vw;
+  margin: 0 auto;
+}
+
+.form .css-1ozmk1d {
+  background-color: orange;
+}
+
+.form::before {
+  background: linear-gradient(45deg, #718096, #1d4044, #44337a);
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0.6;
+}
