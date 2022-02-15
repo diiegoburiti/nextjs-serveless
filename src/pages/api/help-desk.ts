@@ -28,9 +28,9 @@ export default async function handler(
 
   console.log('contebnt', content)
 
-  await collection.insertOne({
+  /*  await collection.insertOne({
     name: content.name
-  })
+  }) */
 
   return response.status(201).json({ ok: true })
 }
