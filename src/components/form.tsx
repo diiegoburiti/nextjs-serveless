@@ -23,7 +23,7 @@ export const FormComponent = () => {
   const ticketsType = ['Internet', 'Hardware', 'Software']
   const [formValues, setFormValues] = useState<ValuesType>({} as ValuesType)
 
-  const handleFormValues = (
+  const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setFormValues((prevState) => {
@@ -64,7 +64,7 @@ export const FormComponent = () => {
                 color="fontColor"
                 name="subject"
                 placeholder="Type the subject"
-                onChange={handleFormValues}
+                onChange={handleChange}
               />
             </FormControl>
             <FormControl>
@@ -77,7 +77,7 @@ export const FormComponent = () => {
                 name="description"
                 color="fontColor"
                 placeholder="Type a description if necessary"
-                onChange={handleFormValues}
+                onChange={handleChange}
               />
             </FormControl>
 
@@ -87,7 +87,7 @@ export const FormComponent = () => {
                 color="fontColor"
                 w="20vw"
                 name="ticketType"
-                onChange={handleFormValues}
+                onChange={handleChange}
               >
                 {ticketsType.map((item) => (
                   <option key={item} value={item}>
